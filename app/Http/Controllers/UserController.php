@@ -9,16 +9,6 @@ use App\Http\Requests\UserUpdateRequest;
 
 class UserController extends Controller
 {
-    public function getAll(): JsonResponse
-    {
-        $users = User::All();
-        return response()->json($users);
-    }
-    public function show(string $id): JsonResponse
-    {
-        $user = User::findOrFail($id);
-        return response()->json($user);
-    }
     public function create(UserRequest $request): JsonResponse
     {
         $userRequest = $request->validated();
@@ -29,6 +19,19 @@ class UserController extends Controller
         ]);
         return response()->json($user);
     }
+
+    public function getAll(): JsonResponse
+    {
+        $users = User::All();
+        return response()->json($users);
+    }
+
+    public function show(string $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+
     public function update(string $id, UserUpdateRequest $request): JsonResponse
     {
         $user = User::findOrFail($id);
@@ -48,6 +51,7 @@ class UserController extends Controller
         }
         return response()->json($user);
     }
+
     public function destroy(string $id): JsonResponse
     {
         $user = User::findOrFail($id);
