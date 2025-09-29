@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
 {
-    public function create(Request $request):JsonResponse
+    public function create(ProductCategoryRequest $request): JsonResponse
     {
-        $requestData =  $request->all();
         $productCategory = [
-            'name'=>$requestData['name']
+            'name' => $request['name']
         ];
         $createProductCategory = ProductCategory::create($productCategory);
         return response()->json($createProductCategory);
@@ -37,11 +36,10 @@ class ProductCategoryController extends Controller
         return response()->json($productCategory);
     }
 
-    public function update(string $productCategoryId, Request $request):JsonResponse
+    public function update(string $productCategoryId, ProductCategoryRequest $request): JsonResponse
     {
         $productCategory = ProductCategory::findOrFail($productCategoryId);
-        $requestData = $request->all();
-        $productCategory->name = $requestData['name'];
+        $productCategory->name = $request['name'];
         $productCategory->save();
         return response()->json($productCategory);
     }
