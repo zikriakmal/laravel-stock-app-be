@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StockTransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,8 @@ Route::prefix('products')
         Route::delete('/{id}', 'destroy');
     });
 
-
+Route::prefix('stock_transactions')
+    ->controller(StockTransactionController::class)
+    ->group(function(){
+        Route::post('/','create');
+    });

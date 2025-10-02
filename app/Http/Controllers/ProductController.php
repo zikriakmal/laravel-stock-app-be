@@ -14,19 +14,20 @@ class ProductController extends BaseController
     public function create(ProductRequest $request): JsonResponse
     {
         $product = [
-            'name' =>$request['name'],
-            'code' =>$request['code'],
+            'name' => $request['name'],
+            'code' => $request['code'],
             'price' => $request['price'],
             'product_category_id' => $request['product_category_id']
         ];
         $createProduct = Product::create($product);
         return $this->response(true, 'Product created', $createProduct);
     }
-        public function getAll(): JsonResponse
-        {
-            $products = Product::with(['productCategory:id,name'])->get();
-            return $this->response(true, 'Products retrieved', $products);
-        }
+    public function getAll(): JsonResponse
+    {
+        $products = Product::with([ 'productCategory:id,name'])->get();
+
+        return $this->response(true, 'Products retrieved', $products);
+    }
     public function show(string $id): JsonResponse
     {
         $product = Product::find($id);

@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
-use Illuminate\Foundation\Http\FormRequest;
-
-class ProductCategoryRequest extends FormRequest
+use App\Http\Requests\BaseRequest;
+class ProductCategoryRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

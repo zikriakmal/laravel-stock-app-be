@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 use App\Http\Requests\BaseRequest;
 
-class ProductUpdateRequest extends BaseRequest
+class StockTransactionRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -20,10 +21,12 @@ class ProductUpdateRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255',
-            'code' => 'string|max:100',
-            'price' => 'numeric',
-            'product_category_id' => 'integer|exists:product_categories,id'
+            "user_id" => "required|integer|exists:users,id",
+            "product_id"=> "required|integer|exists:products,id",
+            "transaction_type"=> "required|in:IN,OUT",
+            "quantity"=>"required|integer",
+            "reference_no"=>"string",
+            "notes"=>"string"
         ];
     }
 }

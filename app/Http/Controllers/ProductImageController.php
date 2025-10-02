@@ -12,5 +12,4 @@ class ProductImageController extends BaseController
     {
         return $this->response(true, 'Product image inserted');
     }
-
 }
