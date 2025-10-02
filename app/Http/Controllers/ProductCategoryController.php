@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\BaseController;
 
-class ProductCategoryController extends Controller
+class ProductCategoryController extends BaseController
 {
     public function create(ProductCategoryRequest $request): JsonResponse
     {
@@ -14,33 +15,42 @@ class ProductCategoryController extends Controller
             'name' => $request['name']
         ];
         $createProductCategory = ProductCategory::create($productCategory);
-        return response()->json($createProductCategory);
+        return $this->response(true, 'Product category created', $createProductCategory);
     }
 
     public function getAll(): JsonResponse
     {
-        $productCategories = ProductCategory::All();
-        return response()->json($productCategories);
+        $productCategories = ProductCategory::all();
+        return $this->response(true, 'Product categories retrieved', $productCategories);
     }
 
     public function show(string $productCategoryId): JsonResponse
     {
-        $productCategory = ProductCategory::findOrFail($productCategoryId);
-        return response()->json($productCategory);
+        $productCategory = ProductCategory::find($productCategoryId);
+        if (!$productCategory) {
+            return $this->response(false, 'Product category not found', null, ['id' => 'Not found'], 404);
+        }
+        return $this->response(true, 'Product category retrieved', $productCategory);
     }
 
     public function destroy(string $productCategoryId): JsonResponse
     {
-        $productCategory = ProductCategory::findOrFail($productCategoryId);
+        $productCategory = ProductCategory::find($productCategoryId);
+        if (!$productCategory) {
+            return $this->response(false, 'Product category not found', null, ['id' => 'Not found'], 404);
+        }
         $productCategory->delete();
-        return response()->json($productCategory);
+        return $this->response(true, 'Product category deleted', $productCategory);
     }
 
     public function update(string $productCategoryId, ProductCategoryRequest $request): JsonResponse
     {
-        $productCategory = ProductCategory::findOrFail($productCategoryId);
+        $productCategory = ProductCategory::find($productCategoryId);
+        if (!$productCategory) {
+            return $this->response(false, 'Product category not found', null, ['id' => 'Not found'], 404);
+        }
         $productCategory->name = $request['name'];
         $productCategory->save();
-        return response()->json($productCategory);
+        return $this->response(true, 'Product category updated', $productCategory);
     }
 }

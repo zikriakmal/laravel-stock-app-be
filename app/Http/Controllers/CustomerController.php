@@ -4,31 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController;
 
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
     public function create(): JsonResponse
     {
-        return response()->json();
+        return $this->response(true, 'Customer created');
     }
 
     public function getAll(): JsonResponse
     {
-        return response()->json();
+        return $this->response(true, 'Customers retrieved');
     }
 
     public function show(): JsonResponse
     {
-        return response()->json();
+        return $this->response(true, 'Customer retrieved');
     }
 
     public function update():JsonResponse
     {
-        return response()->json();
+        return $this->response(true, 'Customer updated');
     }
 
     public function destroy():JsonResponse
     {
-        return response()->json();
+        return $this->response(true, 'Customer deleted');
     }
 }

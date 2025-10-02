@@ -13,14 +13,21 @@ return new class extends Migration
     {
         Schema::create('stock_transactions', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
-            $table->string('user_id');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('user_id');
             $table->enum('transaction_type',['IN','OUT']);
             $table->integer('quantity');
             $table->string('reference_no');
             $table->string('notes');
             $table->string('transaction_date');
             $table->timestamps();
+
+            $table->foreign('product_id')
+                ->references('id')->on('products')
+                ->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
