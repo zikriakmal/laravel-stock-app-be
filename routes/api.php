@@ -1,42 +1,58 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockTransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\EnsureTokenIsValid;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('users')
-    ->controller(UserController::class)
+
+// public routes
+Route::prefix('auth')
+    ->controller(AuthController::class)
     ->group(function () {
-        Route::post('/', 'create');
-        Route::get('/', 'getAll');
-        Route::get('/{id}', 'show');
-        Route::put('/{id}', 'update');
+        Route::post('/login', 'login');
+        Route::post('/logout', 'logout');
+        Route::get('/unauthorized', 'unauthorized');
     });
 
-Route::prefix('product-categories')
-    ->controller(ProductCategoryController::class)
-    ->group(function () {
-        Route::post('/', 'create');
-        Route::get('/', 'getAll');
-        Route::get('/{id}', 'show');
-        Route::put('/{id}', 'update');
-        Route::delete('/{id}', 'destroy');
-    });
+// protected routes
+Route::middleware(['auth:api'])->group(function () {
+    Route::prefix('users')
+        ->controller(UserController::class)
+        ->group(function () {
+            Route::post('/', 'create');
+            Route::get('/', 'getAll');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update');
+        });
 
-Route::prefix('products')
-    ->controller(ProductController::class)
-    ->group(function () {
-        Route::post('/', 'create');
-        Route::get('/', 'getAll');
-        Route::get('/{id}', 'show');
-        Route::put('/{id}', 'update');
-        Route::delete('/{id}', 'destroy');
-    });
+    Route::prefix('product-categories')
+        ->controller(ProductCategoryController::class)
+        ->group(function () {
+            Route::post('/', 'create');
+            Route::get('/', 'getAll');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update');
+            Route::delete('/{id}', 'destroy');
+        });
 
-Route::prefix('stock_transactions')
-    ->controller(StockTransactionController::class)
-    ->group(function(){
-        Route::post('/','create');
-    });
+    Route::prefix('products')
+        ->controller(ProductController::class)
+        ->group(function () {
+            Route::post('/', 'create');
+            Route::get('/', 'getAll');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update');
+            Route::delete('/{id}', 'destroy');
+        });
+
+    Route::prefix('stock_transactions')
+        ->controller(StockTransactionController::class)
+        ->group(function () {
+            Route::post('/', 'create');
+        });
+});
