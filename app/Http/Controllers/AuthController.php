@@ -24,9 +24,4 @@ class AuthController extends BaseController
             'access_token' => $token,
         ]);
     }
-
-    public function unauthorized()
-    {
-        return $this->response(false, 'Unauthorized', null, ['error' => 'Unathorized'], 401);
-    }
 }

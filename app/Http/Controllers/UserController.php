@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Controllers\BaseController;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends BaseController
 {
