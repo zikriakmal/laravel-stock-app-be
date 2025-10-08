@@ -56,5 +56,6 @@ Route::middleware('auth:api')
             ->controller(StockTransactionController::class)
             ->group(function () {
                 Route::post('/', 'create');
+                Route::get('/', 'getAll');
             });
     });

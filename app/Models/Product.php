@@ -23,7 +23,7 @@ class Product extends Model
         'price' => 'float',
     ];
 
-    public function productCategory(): HasMany
+    public function productCategories(): HasMany
     {
         return $this->hasMany(ProductCategory::class, 'id', 'product_category_id');
     }

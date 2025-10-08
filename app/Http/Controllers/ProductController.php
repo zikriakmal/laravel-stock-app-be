@@ -24,7 +24,7 @@ class ProductController extends BaseController
     }
     public function getAll(): JsonResponse
     {
-        $products = Product::with([ 'productCategory:id,name'])->get();
+        $products = Product::with([ 'productCategories:id,name'])->get();
 
         return $this->response(true, 'Products retrieved', $products);
     }
@@ -44,7 +44,7 @@ class ProductController extends BaseController
         }
         $data = $request->validated();
         $product->update($data);
-        $product = Product::with(['productCategory:id,name'])->find($id);
+        $product = Product::with(['productCategories:id,name'])->find($id);
         return $this->response(true, 'Product updated', $product);
     }
     public function destroy(string $id): JsonResponse
