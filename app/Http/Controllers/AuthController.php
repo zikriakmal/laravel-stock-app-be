@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BaseController;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends BaseController
 {
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
 

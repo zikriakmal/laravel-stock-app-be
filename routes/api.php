@@ -26,6 +26,7 @@ Route::middleware('auth:api')
         Route::prefix('users')
             ->controller(UserController::class)
             ->group(function () {
+                Route::get('/my-info','myInfo');
                 Route::post('/', 'create');
                 Route::get('/', 'getAll');
                 Route::get('/{id}', 'show');

@@ -69,4 +69,9 @@ class UserController extends BaseController
         $user->delete();
         return $this->response(true, 'User deleted', $user);
     }
+    public function myInfo(): JsonResponse
+    {
+        $data = Auth::user();
+        return $this->response(true, 'Success get my info', $data);
+    }
 }

@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Your custom authentication message here.',
+                'message' => 'Unauthorized!',
             ], 401);
         });
     })
