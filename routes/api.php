@@ -26,11 +26,12 @@ Route::middleware('auth:api')
         Route::prefix('users')
             ->controller(UserController::class)
             ->group(function () {
-                Route::get('/my-info','myInfo');
+                Route::get('/my-info', 'myInfo');
                 Route::post('/', 'create');
                 Route::get('/', 'getAll');
                 Route::get('/{id}', 'show');
                 Route::put('/{id}', 'update');
+                Route::delete('/{id}', 'destroy');
             });
 
         Route::prefix('product-categories')

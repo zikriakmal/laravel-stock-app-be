@@ -35,6 +35,14 @@ class Product extends Model
 
     public function getQuantityAttribute(): int
     {
-        return (int) $this->stockTransaction()->sum('quantity');
+        $in = $this->stockTransaction()
+            ->where('transaction_type', 'in')
+            ->sum('quantity');
+
+        $out = $this->stockTransaction()
+            ->where('transaction_type', 'out')
+            ->sum('quantity');
+
+        return (int) ($in - $out);
     }
 }

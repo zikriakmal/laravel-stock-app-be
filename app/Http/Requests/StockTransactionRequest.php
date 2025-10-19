@@ -21,7 +21,6 @@ class StockTransactionRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "user_id" => "required|integer|exists:users,id",
             "product_id"=> "required|integer|exists:products,id",
             "transaction_type"=> "required|in:IN,OUT",
             "quantity"=>"required|integer",

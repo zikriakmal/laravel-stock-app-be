@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Controllers\BaseController;
+use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends BaseController
@@ -22,9 +24,11 @@ class UserController extends BaseController
         return $this->response(true, 'User created', $user);
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(HttpRequest $request): JsonResponse
     {
-        $users = User::all();
+        $perPage = $request->get('per_page', 10);
+        $users = User::paginate($perPage);
+
         return $this->response(true, 'Users retrieved', $users);
     }
 
