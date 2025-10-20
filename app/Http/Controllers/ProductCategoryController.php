@@ -6,6 +6,7 @@ use App\Http\Requests\ProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\BaseController;
+use Illuminate\Http\Request;
 
 class ProductCategoryController extends BaseController
 {
@@ -18,9 +19,10 @@ class ProductCategoryController extends BaseController
         return $this->response(true, 'Product category created', $createProductCategory);
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(Request $request): JsonResponse
     {
-        $productCategories = ProductCategory::all();
+        $perPage = $request->get('per_page', 10);
+        $productCategories = ProductCategory::orderBy('updated_at', 'desc')->paginate($perPage);
         return $this->response(true, 'Product categories retrieved', $productCategories);
     }
 

@@ -22,9 +22,10 @@ class ProductController extends BaseController
         $createProduct = Product::create($product);
         return $this->response(true, 'Product created', $createProduct);
     }
-    public function getAll(): JsonResponse
+    public function getAll(Request $request): JsonResponse
     {
-        $products = Product::with([ 'productCategories:id,name'])->get();
+        $perPage = $request->get('per_page', 10);
+        $products = Product::with(['productCategories:id,name'])->orderBy('updated_at', 'desc')->paginate($perPage);
 
         return $this->response(true, 'Products retrieved', $products);
     }
